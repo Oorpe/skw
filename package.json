@@ -1,0 +1,23 @@
+{
+  "name": "skw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oorpe/skw.git"
+  },
+  "author": "Roope Tervo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Oorpe/skw/issues"
+  },
+  "homepage": "https://github.com/Oorpe/skw#readme",
+  "dependencies": {
+    "d3": "^5.0.0",
+    "express": "^4.16.3"
+  }
+}
