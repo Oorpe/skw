@@ -1,5 +1,23 @@
+import {CONSTANTS as C} from './redux/constants';
+import {d3, redux} from './bundles';
 
-import {d3} from './bundles';
+let chain = redux.chain;
+
+// import {rootReducer} from './redux/reducers';
+
+// console.log(redux)
+
+/**
+    get initial app state;
+*/
+redux.store.subscribe(()=>{
+    let state = redux.store.getState();
+    console.log("main subscriber",state)
+    d3.select("#showZoom").text(state.app.zoom)
+
+    localStorage.setItem("skw", JSON.stringify(state))
+})
+
 
 import {
     applyDataToStringGroup
@@ -44,7 +62,7 @@ function draw(data, links){
 
     applyDataToNoteGroup(
         noteGroup
-        ,data
+        ,redux.store.getState().notes
         ,visualConfig
     );
 
@@ -62,6 +80,8 @@ function draw(data, links){
     map links between data points based off of links array
 */
 function mapLinks(links, data){
+    // console.log(links,data)
+    // data = data.notes
   return links.map(link=>{
     let start = data.find(datum=>{return datum.id == link[0]})
     let end = data.find(datum=>{return datum.id == link[1]})
@@ -122,6 +142,8 @@ function dragged(d) {
 */
 function dragended(d) {
     d3.select(this).selectAll("circle").classed('moving', false);
+    //persist state to redux store
+    redux.actions.action(C.UPDATE.NOTE, d).dispatch();
 }
 
 function init(svg){
@@ -140,7 +162,9 @@ let g = svg.append("g")
     svg.call(d3.zoom().scaleExtent([1 / 2, 4])
         .on("zoom", e=>{
             g.attr("transform",d3.event.transform)
-            d3.select("#showZoom").text(d3.event.transform.k)
+
+            //run ui actions through the SSOT source => update redux, redux updates representational comps
+            redux.actions.action(C.APP.ZOOM, d3.event.transform.k).dispatch();
         }))
 
     // let zoom = d3.zoom();
@@ -161,9 +185,17 @@ let data = [{id:1,x:100, y:200}
            ,{id:4, x:400, y:100}];
 
 let links = [[1,2, "green"],
-            [1,3, "blue"],
-            [2,3],
-            [4,2,"gray"]]
+           [1,3, "blue"],
+           [2,3],
+           [4,2,"gray"]]
+
+redux.actions
+.action(C.ADD.NOTES, data)
+.action(C.ADD.STRINGS, mapLinks(links,data))
+.dispatch();
+
+// console.log("redux shape:",redux.store.getState())
+
 
 let svg,
 tackGroup,

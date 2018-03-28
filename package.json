@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Oorpe/skw#readme",
   "dependencies": {
     "d3": "^5.0.0",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "redux": "^3.7.2"
   }
 }
