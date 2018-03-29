@@ -7,6 +7,41 @@ let chain = redux.chain;
 
 // console.log(redux)
 
+
+let data = [{id:1,x:100, y:200}
+            , {id:2,x:300, y:200}
+           , {id:3,x:200, y:300}
+           ,{id:4, x:400, y:100}];
+
+let links = [[1,2, "green"],
+           [1,3, "blue"],
+           [2,3],
+           [4,2,"gray"]]
+
+// redux.actions
+// .action(C.ADD.NOTES, data)
+// .action(C.ADD.STRINGS, mapLinks(links,data))
+// .dispatch();
+
+// console.log("redux shape:",redux.store.getState())
+
+
+let svg,
+tackGroup,
+stringGroup,
+noteGroup
+
+
+
+
+let drag = d3.drag()
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended);
+
+let line = d3.line()
+  .x(d=>d.x)
+  .y(d=>d.y)
 /**
     get initial app state;
 */
@@ -49,17 +84,6 @@ noteBody:{
 
 function draw(data, links){
 
-    // let noteConfig = {
-    //     noteBody:{
-    //         width: 150,
-    //         height: 150,
-    //         x: d=>{return d.x - 150/2},
-    //         y: d=>{return d.y - 10},
-    //         stroke:"red",
-    //         fill:"dodgerblue"
-    //     }
-    // }
-
     applyDataToNoteGroup(
         noteGroup
         ,redux.store.getState().notes
@@ -68,7 +92,7 @@ function draw(data, links){
 
     applyDataToStringGroup(
         stringGroup
-        ,mapLinks(links, data)
+        ,mapLinks(links, redux.store.getState().notes)
         ,visualConfig
     );
   applyDataToTackGroup(tackGroup, data);
@@ -143,7 +167,7 @@ function dragged(d) {
 function dragended(d) {
     d3.select(this).selectAll("circle").classed('moving', false);
     //persist state to redux store
-    redux.actions.action(C.UPDATE.NOTE, d).dispatch();
+    redux.actions.action(C.UPDATE.NOTE, d);
 }
 
 function init(svg){
@@ -159,6 +183,10 @@ let g = svg.append("g")
     noteGroup = g.append("g").attr("id","notes")
     tackGroup = g.append("g").attr("id","tacks")
 
+    d3.select("#showZoom").text(redux.store.getState().app.zoom)
+
+    g.attr("transform",redux.store.getState().app.zoom)
+
     svg.call(d3.zoom().scaleExtent([1 / 2, 4])
         .on("zoom", e=>{
             g.attr("transform",d3.event.transform)
@@ -169,47 +197,16 @@ let g = svg.append("g")
 
     // let zoom = d3.zoom();
 }
-
+init(d3.select("body").append("svg"));
+draw(data,links);
 function setupDemo(){
-  init(d3.select("body").append("svg"));
-  draw(data,links);
+
+
 }
 
 
 window.setupDemo = setupDemo;
 
-
-let data = [{id:1,x:100, y:200}
-            , {id:2,x:300, y:200}
-           , {id:3,x:200, y:300}
-           ,{id:4, x:400, y:100}];
-
-let links = [[1,2, "green"],
-           [1,3, "blue"],
-           [2,3],
-           [4,2,"gray"]]
-
-redux.actions
-.action(C.ADD.NOTES, data)
-.action(C.ADD.STRINGS, mapLinks(links,data))
-.dispatch();
-
-// console.log("redux shape:",redux.store.getState())
-
-
-let svg,
-tackGroup,
-stringGroup,
-noteGroup
-
-
-
-
-let drag = d3.drag()
-        .on('start', dragstarted)
-        .on('drag', dragged)
-        .on('end', dragended);
-
-let line = d3.line()
-  .x(d=>d.x)
-  .y(d=>d.y)
+function add(){
+    // redux.actions.action(C.ADD.NOTE, {x:})
+}

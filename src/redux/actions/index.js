@@ -11,6 +11,7 @@ class ActionChain{
 
     constructor(){
         this.results = [];
+        this.timer = {};
         return this;
     }
 
@@ -19,11 +20,16 @@ class ActionChain{
         // console.log(this, obj
 
         this.results = this.results.concat([obj]);
+        clearTimeout(this.timer);
+        this.timer = setTimeout(()=>{
+            this.dispatch();
+        },50)
         return this;
     }
 
 
     dispatch(){
+        clearTimeout(this.timer);
         // console.log(this)
         // console.log("chain res:",this.results)
         this.results.forEach(res=>{
