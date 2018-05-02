@@ -7,7 +7,7 @@ import {CONSTANTS as C} from '../constants';
 
     wrapped in name function, allows chaining actions and then dispatching them all sequentially
 */
-class ActionChain{
+export class ActionChain{
 
     constructor(){
         this.results = [];
