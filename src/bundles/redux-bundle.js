@@ -1,7 +1,7 @@
 // import * as redux from 'redux';
 
 import store from "../redux/store";
-import * as actions from '../redux/actions';
+import {action, ActionChain} from '../redux/actions';
 
 // window.store = store;
 // window.addNote = actions.add.note;
@@ -16,6 +16,7 @@ import * as actions from '../redux/actions';
 
 
 
-const redux = {store, actions};
+const redux = {store, action, ActionChain};
+// console.log(redux)
 
 export default redux;

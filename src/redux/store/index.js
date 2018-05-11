@@ -7,8 +7,8 @@ import reducer from "../reducers/index";
 //     }
 //     return state;
 // }
-let prev = localStorage.getItem("skw");
-prev = JSON.parse(prev) || {}
+// let prev = localStorage.getItem("skw");
+// prev = JSON.parse(prev) || {}
 
-const store = createStore(reducer, prev);
+const store = createStore(reducer);
 export default store;

@@ -378,6 +378,10 @@ ipaddr.js@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.6.0.tgz#e3fa357b773da619f26e95f049d055c72796f86b"
 
+js-logger@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/js-logger/-/js-logger-1.4.1.tgz#f0230dc5e84e120f213d6e5a6b767a913d290335"
+
 js-tokens@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"

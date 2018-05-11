@@ -19,6 +19,7 @@
   "dependencies": {
     "d3": "^5.0.0",
     "express": "^4.16.3",
+    "js-logger": "^1.4.1",
     "redux": "^3.7.2"
   }
 }
